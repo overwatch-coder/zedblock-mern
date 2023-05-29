@@ -1,3 +1,4 @@
+
 export type User = {
     username: string,
     id: string
@@ -22,5 +23,7 @@ export type ContextValues = {
     setUser?: Dispatch<SetStateAction<User>>,
     openMenu?: boolean,
     setOpenMenu?: Dispatch<SetStateAction<boolean>>,
-    toggleMenu?: () => void
+    toggleMenu?: () => void,
+    tasks?: Task[],
+    setTasks?: Dispatch<SetStateAction<Task[]>>
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { ContextValues, User } from "@/types";
+import { ContextValues, Task, User } from "@/types";
 import { useRouter } from "next/navigation";
 import { createContext, ReactNode, useState, useEffect } from "react"
 import { ToastContainer } from "react-toastify";
@@ -17,6 +17,7 @@ const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
         id: ""
     });
     const [openMenu, setOpenMenu] = useState(false);
+    const [tasks, setTasks] = useState<Task[]>()
     const router = useRouter();
 
     const toggleMenu = () => {
@@ -37,7 +38,7 @@ const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
             
             setUser(result);
         }
-        
+
         //navigate user to login page in not signed in
         if(user?.username){
             return router.push('/login');
@@ -49,7 +50,9 @@ const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
         setUser,
         openMenu,
         setOpenMenu,
-        toggleMenu
+        toggleMenu,
+        tasks,
+        setTasks
     }
   
     return (
