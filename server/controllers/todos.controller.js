@@ -10,8 +10,8 @@ import DeletedTodo from "../models/deletedTodo.model.js";
 //get all of todos of the user
 const getAllTodos = expressAsyncHandler(async (req, res) => {
     const user = req.user;
-    const page = parseInt(req.query.page);
-    const limit = parseInt(req.query.limit);
+    const page = parseInt(req.query?.page) || 1;
+    const limit = parseInt(req.query?.limit) || 20;
     const { sortBy } = req.query;
 
     const sort = {};
@@ -28,8 +28,8 @@ const getAllTodos = expressAsyncHandler(async (req, res) => {
     const allTodos = await Todo.find({user: user.id});
     const todos = await Todo.find({user: user.id})
     .sort(Object.keys(sort).length > 0 ? sort : {createdAt: 'desc'})
-    .limit(limit || 10)
-    .skip(startIndex || 0)
+    .limit(limit)
+    .skip(startIndex)
     .lean()
     .exec();
     
