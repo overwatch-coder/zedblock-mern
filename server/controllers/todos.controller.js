@@ -22,18 +22,17 @@ const getAllTodos = expressAsyncHandler(async (req, res) => {
     const results = {};
     let startIndex = (page - 1) * limit;
     let endIndex = page * limit;
-
     
     //get all the todos of a user with filters applied to it
     const allTodos = await Todo.find({user: user.id});
     const todos = await Todo.find({user: user.id})
-    .sort(Object.keys(sort).length > 0 ? sort : {createdAt: 'desc'})
+    .sort((sort?.title || sort?.createdAt) ? sort : { createdAt: -1 })
     .limit(limit)
     .skip(startIndex)
     .lean()
     .exec();
     
-    const deletedTodos = await DeletedTodo.find({}).populate('user', '-password').sort({createdAt: -1}).lean().exec();
+    const deletedTodos = await DeletedTodo.find({user: user.id}).sort({createdAt: -1}).lean().exec();
     
     if(!(todos.length > 0 || allTodos > 0)) return res.status(404).json({message: 'No todos found', deletedTodos});
     
