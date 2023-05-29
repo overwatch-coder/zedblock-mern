@@ -12,8 +12,14 @@ const NavbarItems = () => {
     const pathname = usePathname();
 
     useEffect(() => {
-      if(pathname === '/' || pathname === '/tasks/*'){
-        if(!user?.username) return router.push('/login');
+      if(!(user?.username)) {
+        if(pathname === '/' || pathname === '/tasks/create' || pathname === '/tasks/:id/edit' || pathname === '/tasks/:id'){
+          return router.push('/login');
+        }
+      }else {
+        if(pathname === '/register' || pathname === 'login'){
+          return router.push('/');
+        }
       }
     }, [pathname, router, user?.username])
     
