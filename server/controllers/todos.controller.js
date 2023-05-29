@@ -158,8 +158,6 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
     //find user model to update
     const userInfo = await User.findOne({username: user.username}).lean().exec();
     if(!userInfo) return res.status(500).json({message: 'user does not exist'});
-    
-    console.log(userInfo.todos.filter(todo => todo.toString() === deletedTodo._id.toString()));
 
     //update user with the newly deleted todo id
     const userUpdated = await User.findOneAndUpdate({username: user.username}, {
@@ -169,7 +167,7 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
     }, {new: true}).select('-password').lean().exec();
     if(!userUpdated) return res.status(500).json({message: 'todo requested does not exist'});
 
-    res.status(200).json({message: `todo for ${user.username} with id ${id} deleted successfully`, todo: deletedTodo, createDeletedTodo, userUpdated, user});
+    res.status(200).json({message: `todo for ${user.username} with id ${id} deleted successfully`});
 });
 
 
@@ -213,7 +211,7 @@ const restoreTodo = expressAsyncHandler(async (req, res) => {
     if(!updatedUserInfo) return res.status(500).json({message: 'user does not exist', user, id});
 
     //send success response to client
-    res.status(200).json({message: "todo restored successfully", todo: restoredTodo, newTodoFromDeleted, deletedTodo, updatedUserInfo});
+    res.status(200).json({message: "todo restored successfully", todo: restoredTodo});
 });
 
 export {

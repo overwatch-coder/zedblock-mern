@@ -5,6 +5,7 @@ import validator from 'validator';
 //import models
 import User from '../models/user.model.js';
 import Todo from '../models/todo.model.js';
+import DeletedTodo from "../models/deletedTodo.model.js";
 
 //custom function imports
 import { generateToken, hashPassword, verifyPassword } from '../utils/index.js';
@@ -82,11 +83,18 @@ const removeUser = expressAsyncHandler(async (req, res) => {
     const deletedUser = await User.findOneAndDelete({username: user.username}).lean().exec();
     if(!deletedUser) return res.status(500).json({message: "User not found"});
 
-    //get deleted user's posts and delete them
+    //get deleted user's todos and delete them
     const todos = await Todo.find({user: deletedUser._id}).lean().exec();
+    const removeFromDeletedTodo = await DeletedTodo.find({user: deletedUser._id}).lean().exec();
     if(todos.length > 0){
         todos.map(async (todo) => {
             await Todo.findOneAndDelete({_id: todo._id});
+        })
+    }
+
+    if(removeFromDeletedTodo.length > 0){
+        removeFromDeletedTodo.map(async (todo) => {
+            await DeletedTodo.findOneAndDelete({_id: todo._id});
         })
     }
 
