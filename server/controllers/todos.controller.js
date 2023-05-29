@@ -16,7 +16,7 @@ const getAllTodos = expressAsyncHandler(async (req, res) => {
 
     const sort = {};
     if(sort){
-        sort[sortBy.split(':')[[0]]] = sortBy.split(':')[1]
+        sort[sortBy?.split(':')[[0]]] = sortBy?.split(':')[1]
     }
 
     const results = {};
@@ -27,7 +27,7 @@ const getAllTodos = expressAsyncHandler(async (req, res) => {
     //get all the todos of a user with filters applied to it
     const allTodos = await Todo.find({user: user.id});
     const todos = await Todo.find({user: user.id})
-    .sort(sort ? sort : {createdAt: 'desc'})
+    .sort(Object.keys(sort).length > 0 ? sort : {createdAt: 'desc'})
     .limit(limit || 10)
     .skip(startIndex || 0)
     .lean()
