@@ -21,7 +21,8 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
-  credentials: true
+  credentials: true,
+  origin: "https://zedblock-mern.vercel.app/",
 }));
 
 //connect to db
