@@ -4,24 +4,20 @@ import React, {useState, useContext, useEffect} from 'react'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from '@/app/context/authTodoContext';
-import { CreateTask, Task } from '@/types';
+import { CreateTask } from '@/types';
 import { createTask } from '@/app/utils';
 
 const AddTask = () => {
-  const {user, setTasks} = useContext(AuthTodoContext);
+  const {user} = useContext(AuthTodoContext);
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    
     if(!(user?.username)){
-      setTimeout(() => {
-        return router.push('/')
-      }, 0);
+      return router.push('/')
     };
-
   }, [router, user?.username])
 
   const createNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -53,14 +49,9 @@ const AddTask = () => {
     }
 
     const newTask = await createTask(task);
-
-    const taskToAdd: Task = {
-      _id: newTask._id,
-      title: newTask.title,
-      description: newTask.description,
-      completed: newTask.completed
+    if(!(newTask._id)){
+      return toast.error('There was a problem creating the task');
     }
-    setTasks((prev: Task[])=> [...prev, taskToAdd]);
 
     toast.success('new task created successfully');
 

@@ -5,38 +5,51 @@ import React, {useContext, useEffect, useState} from 'react'
 import Filter from './components/Filter';
 import SingleTask from './components/SingleTask';
 import { getTask } from './utils';
-import { Task } from '@/types';
+import { DeletedTask, Task } from '@/types';
 import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from './context/authTodoContext';
 
 const Home = () => {
-  const {tasks, setTasks, user} = useContext(AuthTodoContext);
+  const {tasks, setTasks, user, setDeletedTasks, deletedTasks} = useContext(AuthTodoContext);
   const router = useRouter();
-  const [deletedTasks, setDeletedTasks]= useState([]);
+
+  const [filter, setFilter] = useState('All');
 
   useEffect(() => {
     if(!user?.username) return router.push('/login');
+  }, [router, user?.username]);
+
+  useEffect(() => {
 
     const fetchAllTasks = async () => {
       const results = await getTask(`${process.env.NEXT_PUBLIC_API_URI}/todos`, user?.token);
-      setTasks(results.todos.todos);
-      setDeletedTasks(results.deletedTodos);
+      setTasks(results?.todos?.todos || []);
+      setDeletedTasks(results?.deletedTodos);
     }
 
     fetchAllTasks();
-  }, [setTasks, router, user?.username, user?.token]);
+  }, [setTasks, user?.token, setDeletedTasks]);
 
   return (
     <section className='flex flex-col space-y-5 py-10 w-full md:max-w-4xl mx-auto bg-slate-200 shadow-md p-10'>
+
+      {/* Filter, Sort, Action Menu & Search Component */}
+      <Filter 
+        filter={filter}
+        setFilter={setFilter}
+      />
+
       {/* display all tasks */}
-      {(tasks && tasks.length > 0 ) ? (
+      {((tasks?.length > 0 ) || (deletedTasks?.length > 0 ) ) ? (
         <>
         {/* Filter Component */}
-          <Filter />
+          {/* <Filter /> */}
 
           {/* Display Tasks */}
           <section className='flex flex-col space-y-6'>
-            <h2 className='font-semibold font-[georgia] text-2xl py-4'>All Tasks</h2>
+            <h2 className='font-semibold font-[georgia] text-2xl py-4'>
+              {!tasks?.length ? 'No tasks available' : `${filter} Tasks`}
+            </h2>
 
             {tasks?.map((task: Task) => (
               <SingleTask 
@@ -46,10 +59,10 @@ const Home = () => {
             ))}
           </section>
 
-          {deletedTasks.length > 0 && 
+          {deletedTasks?.length > 0 && 
             <section>
               <h2 className='font-semibold font-[georgia] text-2xl py-4 mt-10 text-red-600'>
-                All deleted tasks
+                Deleted tasks
               </h2>
 
               <div className='flex flex-col space-y-4'>

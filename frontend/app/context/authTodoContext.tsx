@@ -1,6 +1,6 @@
 'use client'
 
-import { ContextValues, Task, User } from "@/types";
+import { ContextValues, DeletedTask, Task, User } from "@/types";
 import { createContext, ReactNode, useState, useEffect } from "react"
 import { ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +12,9 @@ export const AuthTodoContext =  createContext<ContextValues>({
     setOpenMenu: () => false,
     setUser: ({username: "", id: ""}),
     setTasks: ([]),
-    toggleMenu: () => false
+    toggleMenu: () => false,
+    deletedTasks: [],
+    setDeletedTasks: ([])
 })
 
 type AuthTodoContextProps = {
@@ -26,7 +28,8 @@ const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
         token: ""
     });
     const [openMenu, setOpenMenu] = useState(false);
-    const [tasks, setTasks] = useState<Task[]>()
+    const [tasks, setTasks] = useState<Task[]>();
+    const [deletedTasks, setDeletedTasks]= useState<DeletedTask[]>([]);
 
     const toggleMenu = () => {
         setOpenMenu(prev => !prev);
@@ -55,7 +58,9 @@ const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
         setOpenMenu,
         toggleMenu,
         tasks,
-        setTasks
+        setTasks,
+        deletedTasks, 
+        setDeletedTasks
     }
   
     return (

@@ -8,7 +8,7 @@ import { AuthTodoContext } from '../context/authTodoContext';
 import { toast } from 'react-toastify';
 
 const Register = () => {
-  const {setUser, user} = useContext(AuthTodoContext);
+  const {setUser, user, setOpenMenu} = useContext(AuthTodoContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
@@ -17,9 +17,7 @@ const Register = () => {
   useEffect(() => {
     
     if(user?.username){
-      setTimeout(() => {
         return router.push('/')
-      }, 0);
     };
 
   }, [router, user?.username])
@@ -56,7 +54,9 @@ const Register = () => {
       setUsername('');
       setPassword('');
   
+      setOpenMenu(false);
       router.push('/');
+
     }
 
   }

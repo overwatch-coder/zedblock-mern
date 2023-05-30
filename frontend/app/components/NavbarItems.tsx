@@ -8,14 +8,13 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const NavbarItems = () => {
-    const {user, setUser, setTasks} = useContext(AuthTodoContext);
+    const {user, setUser, setTasks, setOpenMenu} = useContext(AuthTodoContext);
     const router = useRouter();
 
     const logoutUser = () => {
 
       localStorage.removeItem('user');
 
-      
       setUser({
         id: "",
         username: "",
@@ -28,6 +27,8 @@ const NavbarItems = () => {
       
       toast.success('you have been successfully logged out');
 
+      setOpenMenu(false);
+      
       setTasks([]);
     }
     

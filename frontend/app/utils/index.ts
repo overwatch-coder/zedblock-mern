@@ -1,25 +1,6 @@
 import { CreateTask } from "@/types";
 import { toast } from "react-toastify";
 
-export const getTask = async (url: string, token: string) => {
-    const res = await fetch(url, {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    });
-    
-    if(!res.ok) {
-        const error = await res.json();
-        toast.success(error.message);
-        throw new Error('Something went wrong!!')
-    };
-
-    const tasks = await res.json();
-    
-    return tasks;
-}
-
 export const registerOrLoginUser = async (username: string, password: string, endpoint: string) => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/${endpoint}`, {
         method: 'POST',
@@ -35,6 +16,28 @@ export const registerOrLoginUser = async (username: string, password: string, en
 
     return result;
 }
+
+export const getTask = async (url: string, token: string) => {
+    const res = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+    
+    if(url !== `${process.env.NEXT_PUBLIC_API_URI}/todos`){
+        if(!res.ok) {
+            const error = await res.json();
+            toast.success(error.message);
+            throw new Error('Something went wrong!!')
+        };
+    }
+    
+    const tasks = await res.json();
+    
+    return tasks;
+}
+
 
 export const createTask = async (task: CreateTask, method: string = 'POST', id: string = "") => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/todos/${id}`, {

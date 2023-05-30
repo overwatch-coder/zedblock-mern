@@ -8,18 +8,16 @@ import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from '../context/authTodoContext';
 
 const Login = () => {
-  const {setUser, user} = useContext(AuthTodoContext);
+  const {setUser, user, setOpenMenu} = useContext(AuthTodoContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
   const router = useRouter();
 
   useEffect(() => {
-    
+
     if(user?.username){
-      setTimeout(() => {
-        return router.push('/')
-      }, 0);
+      return router.push('/')
     };
 
   }, [router, user?.username])
@@ -58,7 +56,9 @@ const Login = () => {
       
       setUsername('');
       setPassword('');
-  
+
+      setOpenMenu(false);
+      
       router.push('/');
     }
   }
@@ -95,6 +95,12 @@ const Login = () => {
 
         <button type='submit' className='bg-green-600 hover:bg-green-700 rounded py-3 text-center text-white uppercase'>Submit</button>
       </form>
+
+      <div>
+        <h2>Demo Account</h2>
+        <p>username: Guest</p>
+        <p>password: Guest12345@@</p>
+      </div>
 
       <div className='flex space-x-2'>
         <p className='font-medium'>Do not have an account?</p>

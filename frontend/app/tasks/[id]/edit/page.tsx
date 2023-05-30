@@ -17,9 +17,7 @@ const EditTask = ({params: {id}} : {params: {id: string}}) => {
 
   useEffect(() => {
     if(!(user?.username)){
-      setTimeout(() => {
-        return router.push('/')
-      }, 0);
+      return router.push('/')
     };
 
     const fetchTask = async () => {

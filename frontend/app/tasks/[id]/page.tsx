@@ -18,9 +18,7 @@ const TaskDetails = ({params: {id}}: {params: {id: string}}) => {
   useEffect(() => {
     
     if(!(user?.username)){
-      setTimeout(() => {
-        return router.push('/')
-      }, 0);
+      return router.push('/')
     };
 
   }, [router, user?.username])

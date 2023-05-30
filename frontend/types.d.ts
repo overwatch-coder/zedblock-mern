@@ -6,17 +6,28 @@ export type User = {
 }
 
 export type Task = {
-    title: string,
-    description: string,
+    title?: string,
+    description?: string,
     _id?: string,
-    completed: boolean
+    completed?: boolean
 }
 
 export type CreateTask = {
+    title?: string,
+    description?: string,
+    completed?: boolean,
+    user: User
+}
+
+export type DeletedTask = {
+    _id: string,
     title: string,
     description: string,
     completed: boolean,
-    user: User
+    user: string,
+    createdAt: string,
+    updatedAt: string,
+    __v: number
 }
 
 export type ContextValues = {
@@ -25,6 +36,8 @@ export type ContextValues = {
     openMenu: boolean,
     setOpenMenu: Dispatch<SetStateAction<boolean>>,
     toggleMenu: () => void,
-    tasks: Task[] | undefined,
-    setTasks: Dispatch<SetStateAction<Task[]>>
+    tasks: Task[],
+    setTasks: Dispatch<SetStateAction<Task[]>>,
+    deletedTasks: DeletedTask[],
+    setDeletedTasks: Dispatch<SetStateAction<DeletedTask[]>>,
 }
