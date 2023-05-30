@@ -40,7 +40,7 @@ const register = expressAsyncHandler(async (req, res) => {
         expires: new Date(Date.now() + 86400000) //expires in 1day
     })
     .status(200)
-    .json({message: 'Account created successfully', user: user.username});
+    .json({message: 'Account created successfully', user: {username: user.username, id: user._id}});
 });
 
 //desc LOGIN user
@@ -67,7 +67,10 @@ const login = expressAsyncHandler(async (req, res) => {
         expires: new Date(Date.now() + 86400000) //expires in 1day
     })
     .status(200)
-    .json({message: 'You have successfully logged in!', user: existingUser.username});
+    .json({message: 'You have successfully logged in!', user: {
+        username: existingUser.username,
+        id: existingUser._id
+    }});
 });
 
 //desc DELETE user
