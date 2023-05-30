@@ -15,14 +15,15 @@ const Login = () => {
   const router = useRouter();
 
   useEffect(() => {
-    if(user?.username) return router.push('/');
+    
+    if(user?.username){
+      setTimeout(() => {
+        return router.push('/')
+      }, 0);
+    };
+
   }, [router, user?.username])
 
-  if(user?.username){
-    setTimeout(() => {
-      return router.push('/')
-    }, 0);
-  };
 
   const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

@@ -16,6 +16,12 @@ const EditTask = ({params: {id}} : {params: {id: string}}) => {
   const router = useRouter();
 
   useEffect(() => {
+    if(!(user?.username)){
+      setTimeout(() => {
+        return router.push('/')
+      }, 0);
+    };
+
     const fetchTask = async () => {
       const task = await getTask(`${process.env.NEXT_PUBLIC_API_URI}/todos/${id}`, user.token);
 
@@ -26,12 +32,6 @@ const EditTask = ({params: {id}} : {params: {id: string}}) => {
 
     fetchTask();
   }, [id, router, user.token, user?.username])
-
-  if(!(user?.username)){
-    setTimeout(() => {
-      return router.push('/login')
-    }, 0);
-  };
 
   const editExistingTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

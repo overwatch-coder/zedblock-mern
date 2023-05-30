@@ -5,7 +5,7 @@ import { createTask} from '@/app/utils';
 import { CreateTask } from '@/types';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import { toast } from 'react-toastify';
 
 const TaskDetails = ({params: {id}}: {params: {id: string}}) => {
@@ -15,11 +15,15 @@ const TaskDetails = ({params: {id}}: {params: {id: string}}) => {
 
   const singleTask = tasks?.filter(item => item._id === id);
 
-  if(!(user?.username)){
-    setTimeout(() => {
-      return router.push('/login')
-    }, 0);
-  };
+  useEffect(() => {
+    
+    if(!(user?.username)){
+      setTimeout(() => {
+        return router.push('/')
+      }, 0);
+    };
+
+  }, [router, user?.username])
 
   const handleDeleteTask = async () => {
     const fakeTask: CreateTask = {

@@ -1,6 +1,6 @@
 'use client'
 
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { toast } from 'react-toastify';
 import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from '@/app/context/authTodoContext';
@@ -14,11 +14,15 @@ const AddTask = () => {
   const [error, setError] = useState('');
   const router = useRouter();
 
-  if(!(user?.username)){
-    setTimeout(() => {
-      return router.push('/login')
-    }, 0);
-  };
+  useEffect(() => {
+    
+    if(!(user?.username)){
+      setTimeout(() => {
+        return router.push('/')
+      }, 0);
+    };
+
+  }, [router, user?.username])
 
   const createNewTask = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

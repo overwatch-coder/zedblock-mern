@@ -1,18 +1,28 @@
 'use client'
 
 import Link from 'next/link'
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import { registerOrLoginUser } from '../utils';
 import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from '../context/authTodoContext';
 import { toast } from 'react-toastify';
 
 const Register = () => {
-  const {setUser} = useContext(AuthTodoContext);
+  const {setUser, user} = useContext(AuthTodoContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState('');
   const router = useRouter();
+
+  useEffect(() => {
+    
+    if(user?.username){
+      setTimeout(() => {
+        return router.push('/')
+      }, 0);
+    };
+
+  }, [router, user?.username])
 
   const registerUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
