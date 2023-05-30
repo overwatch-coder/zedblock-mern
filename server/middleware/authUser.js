@@ -2,7 +2,10 @@ import { decodeToken } from "../utils/index.js";
 
 export const authenticateUser = async (req, res, next) => {
     //get token from req headers
-    const { token } = req.cookies;
+    const authorization= req.headers?.authorization;
+
+    const token = authorization.split(' ')[1];
+
     if(!token) return res.status(403).json({message: 'No token found!'});
 
     //get user info from the cookies

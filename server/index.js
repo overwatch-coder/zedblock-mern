@@ -20,10 +20,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
-app.use(cors({
-  credentials: true,
-  origin: ["https://zedblock-mern.vercel.app", 'http://localhost:3000'],
-}));
+app.use(cors());
 
 //connect to db
 connectDB();
