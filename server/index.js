@@ -21,7 +21,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
-    origin: ['https://zedblock-mern.vercel.app/', 'http://localhost:3000/'],
+    origin: "*",
     credentials: true
 }));
 
