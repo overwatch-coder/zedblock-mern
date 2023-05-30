@@ -37,7 +37,8 @@ const register = expressAsyncHandler(async (req, res) => {
     //generate user token and send to response cookies
     res.cookie('token', await generateToken({username: user.username, id: user._id}), {
         httpOnly: true,
-        expires: new Date(Date.now() + 86400000) //expires in 1day
+        expires: new Date(Date.now() + 86400000), //expires in 1day
+        secure: true
     })
     .status(200)
     .json({message: 'Account created successfully', user: {username: user.username, id: user._id}});
@@ -64,7 +65,8 @@ const login = expressAsyncHandler(async (req, res) => {
     //generate user token and send to response cookies
     res.cookie('token', await generateToken({username: existingUser.username, id: existingUser._id}), {
         httpOnly: true,
-        expires: new Date(Date.now() + 86400000) //expires in 1day
+        expires: new Date(Date.now() + 86400000), //expires in 1day,
+        secure: true
     })
     .status(200)
     .json({message: 'You have successfully logged in!', user: {
@@ -104,14 +106,33 @@ const removeUser = expressAsyncHandler(async (req, res) => {
     //send response to user
     res.clearCookie('token', {
         httpOnly: true,
-        expires: new Date(Date.now() + 86400000) //expires in 1day
+        expires: new Date(Date.now() - 86400000), //expires in 1day
+        secure: true
     })
     .status(200).json({message: 'User deleted successfully', user: deletedUser.username});
+});
+
+//user logout
+const logout = expressAsyncHandler(async (req, res) => {
+    //get the correctly signed in user from request headers
+    const user = req?.user
+
+    //check if user provided empty values
+    if(!user) return res.status(403).json({message: "You are not logged in"});
+
+    //send response to user
+    res.clearCookie('token', {
+        httpOnly: true,
+        expires: new Date(Date.now() - 86400000), //expires in 1day
+        secure: true
+    })
+    .status(200).json({message: 'You have successfully logged out'});
 });
 
 
 export {
     login,
     register,
-    removeUser
+    removeUser,
+    logout
 }
