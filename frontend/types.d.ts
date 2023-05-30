@@ -36,7 +36,7 @@ export type ContextValues = {
     openMenu: boolean,
     setOpenMenu: Dispatch<SetStateAction<boolean>>,
     toggleMenu: () => void,
-    tasks: Task[],
+    tasks: Task[] | undefined,
     setTasks: Dispatch<SetStateAction<Task[]>>,
     deletedTasks: DeletedTask[],
     setDeletedTasks: Dispatch<SetStateAction<DeletedTask[]>>,

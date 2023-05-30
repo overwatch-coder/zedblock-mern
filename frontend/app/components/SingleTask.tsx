@@ -17,29 +17,31 @@ const Task = ({task, deleted}: TaskProps) => {
     const {user, setTasks, tasks, setDeletedTasks} = useContext(AuthTodoContext);
 
     const toggleCompleted = async (id?: string) => {
-        const selectedTaskIndex = tasks?.findIndex(item => item._id === id);
+        if(tasks){
+            const selectedTaskIndex = tasks?.findIndex(item => item._id === id);
 
-        if (selectedTaskIndex !== -1) {
-          const updatedTask = {
-            ...tasks[selectedTaskIndex],
-            completed: !tasks[selectedTaskIndex].completed,
-          };
-        
-          const updatedTasks = [...tasks];
-          updatedTasks[selectedTaskIndex] = updatedTask;
-        
-          setTasks(updatedTasks);
-
-          const taskUpdate: CreateTask = {
-              title: task.title,
-              description: task.description,
-              completed: updatedTask.completed,
-              user
-          }
-
-          //update the completed state
-          await createTask(taskUpdate, 'PATCH', id);
-
+            if (selectedTaskIndex !== -1) {
+              const updatedTask = {
+                ...tasks[selectedTaskIndex],
+                completed: !tasks[selectedTaskIndex].completed,
+              };
+            
+              const updatedTasks = [...tasks];
+              updatedTasks[selectedTaskIndex] = updatedTask;
+            
+              setTasks(updatedTasks);
+    
+              const taskUpdate: CreateTask = {
+                  title: task.title,
+                  description: task.description,
+                  completed: updatedTask.completed,
+                  user
+              }
+    
+              //update the completed state
+              await createTask(taskUpdate, 'PATCH', id);
+    
+            }
         }
     }
 

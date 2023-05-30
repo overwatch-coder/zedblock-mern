@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 export const AuthTodoContext =  createContext<ContextValues>({
     user: {username: "", id: "", token: ""},
     openMenu: false,
-    tasks: [],
+    tasks: [] ,
     setOpenMenu: () => false,
     setUser: ({username: "", id: ""}),
     setTasks: ([]),

@@ -5,7 +5,7 @@ import React, {useContext, useEffect, useState} from 'react'
 import Filter from './components/Filter';
 import SingleTask from './components/SingleTask';
 import { getTask } from './utils';
-import { DeletedTask, Task } from '@/types';
+import { Task } from '@/types';
 import { useRouter } from 'next/navigation';
 import { AuthTodoContext } from './context/authTodoContext';
 
@@ -40,7 +40,7 @@ const Home = () => {
       />
 
       {/* display all tasks */}
-      {((tasks?.length > 0 ) || (deletedTasks?.length > 0 ) ) ? (
+      {((tasks && (tasks?.length) > 0 ) || (deletedTasks?.length > 0 ) ) ? (
         <>
         {/* Filter Component */}
           {/* <Filter /> */}

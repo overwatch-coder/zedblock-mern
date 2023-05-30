@@ -44,7 +44,7 @@ const Filter = ({filter, setFilter}: FilterProps) => {
     
     //bulk delete completed tasks
     const bulkDeleteTasks = () => {
-        if(tasks?.length > 0){
+        if(tasks && tasks?.length > 0){
             const allCompletedTasks = tasks?.filter((item: Task) => item.completed === true);
 
             const remainingTasks = tasks?.filter((item: Task) => item.completed === false);
