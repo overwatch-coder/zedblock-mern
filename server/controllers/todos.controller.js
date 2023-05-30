@@ -123,7 +123,7 @@ const updateTodo = expressAsyncHandler(async (req, res) => {
     const todo = await Todo.findOneAndUpdate({$and: [{user: user.id}, {_id: id}]}, {
         title: title ? title : existingTodo.title,
         description: description ? description : existingTodo.description,
-        completed: completed ? completed : existingTodo.completed
+        completed:(completed && (completed === existingTodo.completed)) ? existingTodo.completed : completed
     }, {new: true}).lean().exec();
 
     if(!todo) return res.status(500).json({message: 'todo requested does not exist'});
