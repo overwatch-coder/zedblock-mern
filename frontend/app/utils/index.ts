@@ -12,7 +12,7 @@ export const getTask = async (url: string, token: string) => {
     if(!res.ok) {
         const error = await res.json();
         toast.success(error.message);
-        throw new Error('Something went wrong!')
+        throw new Error('Something went wrong!!')
     };
 
     const tasks = await res.json();
