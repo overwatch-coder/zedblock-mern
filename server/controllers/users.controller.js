@@ -38,7 +38,7 @@ const register = expressAsyncHandler(async (req, res) => {
     res.cookie('token', await generateToken({username: user.username, id: user._id}), {
         httpOnly: true,
         expires: new Date(Date.now() + 86400000), //expires in 1day
-        secure: true
+        // secure: true
     })
     .status(200)
     .json({message: 'Account created successfully', user: {username: user.username, id: user._id}});
@@ -66,7 +66,7 @@ const login = expressAsyncHandler(async (req, res) => {
     res.cookie('token', await generateToken({username: existingUser.username, id: existingUser._id}), {
         httpOnly: true,
         expires: new Date(Date.now() + 86400000), //expires in 1day,
-        secure: true
+        // secure: true
     })
     .status(200)
     .json({message: 'You have successfully logged in!', user: {
@@ -107,7 +107,7 @@ const removeUser = expressAsyncHandler(async (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         expires: new Date(Date.now() - 86400000), //expires in 1day
-        secure: true
+        // secure: true
     })
     .status(200).json({message: 'User deleted successfully', user: deletedUser.username});
 });
@@ -124,7 +124,7 @@ const logout = expressAsyncHandler(async (req, res) => {
     res.clearCookie('token', {
         httpOnly: true,
         expires: new Date(Date.now() - 86400000), //expires in 1day
-        secure: true
+        // secure: true
     })
     .status(200).json({message: 'You have successfully logged out'});
 });
