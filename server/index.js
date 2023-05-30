@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(cookieParser());
 app.use(cors({
   credentials: true,
-  origin: "https://zedblock-mern.vercel.app",
+  origin: ["https://zedblock-mern.vercel.app", 'http://localhost:3000'],
 }));
 
 //connect to db
