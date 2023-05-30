@@ -10,7 +10,6 @@ const Home = async () => {
 
   return (
     <section className='flex flex-col space-y-5 py-10 w-full md:max-w-4xl mx-auto bg-slate-200 shadow-md p-10'>
-
       {/* display all tasks */}
       {(tasks.length > 0 ) ? (
         <>

@@ -1,39 +1,56 @@
 'use client'
 
 import Link from 'next/link'
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import { AuthTodoContext } from '../context/authTodoContext'
 import {BsPersonCircle} from 'react-icons/bs';
-import { usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
+import { toast } from 'react-toastify';
 
 const NavbarItems = () => {
-    const {user} = useContext(AuthTodoContext);
+    const {user, setUser} = useContext(AuthTodoContext);
     const router = useRouter();
-    const pathname = usePathname();
 
-    useEffect(() => {
-      if(!(user?.username)) {
-        if(pathname === '/' || pathname === '/tasks/create' || pathname === '/tasks/:id/edit' || pathname === '/tasks/:id'){
-          return router.push('/login');
-        }
-      }else {
-        if(pathname === '/register' || pathname === 'login'){
-          return router.push('/');
-        }
-      }
-    }, [pathname, router, user?.username])
-    
+    const logoutUser = async () => {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/logout`, {
+        method: "POST",
+        credentials: "include",
+        
+      });
+
+      console.log(res.headers);
+
+      const result = await res.json();
+      toast.success(result.message);
+      if(!res.ok) throw new Error('Unexpected error while logging out');
+
+      localStorage.removeItem('user');
+
+      setUser({
+        id: "",
+        username: ""
+      });
+
+      toast.success(result.message);
+
+      router.push('/login');
+    }
 
   return (
-    <nav className={`flex flex-col space-y-6 md:space-y-0 md:flex-row md:items-center md:space-x-4 mt-6 md:mt-0 mb-4 md:mb-0`}> 
+    <nav className={`flex flex-col space-y-6 md:space-y-0 md:flex-row md:items-center md:space-x-6 mt-6 md:mt-0 mb-4 md:mb-0`}> 
         {user?.username &&
            <>
             <Link href={'/'} className='hover:text-cyan-600'>Tasks</Link>
             <Link href={'/tasks/create'} className='hover:text-cyan-600'>Add Task</Link>
-            <p className='pt-5 md:pt-0 md:pl-10 flex items-center space-x-3'>
+
+            <p className='pt-5 md:pt-0 md:pl-5 flex items-center space-x-3'>
                 <BsPersonCircle size={30} />
                 <span>{user?.username || "Guest"}</span>
             </p>
+
+            <button 
+              onClick={logoutUser}
+              className='bg-green-600 py-3 md:py-2 w-full md:w-20 rounded hover:bg-green-700'>Logout</button>
            </> 
         }
         {!user?.username && 
