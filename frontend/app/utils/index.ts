@@ -1,12 +1,21 @@
-import { TodoType } from "@/types";
+import { Task } from "@/types";
+import { toast } from "react-toastify";
 
 export const getTask = async (url: string) => {
-    const res = await fetch(url, {next: {revalidate: 60}});
-
-    if(!res.ok) throw new Error('Something went wrong!');
+    const res = await fetch(url, {
+        method: 'GET',
+        credentials: 'include'
+    });
     
-    const todos: TodoType[] = await res.json();
-    return todos;
+    if(!res.ok) {
+        const error = await res.json();
+        toast.error(error.message);
+        throw new Error('Something went wrong!')
+    };
+
+    const tasks: Task[] = await res.json();
+    
+    return tasks;
 }
 
 export const registerOrLoginUser = async (username: string, password: string, endpoint: string) => {

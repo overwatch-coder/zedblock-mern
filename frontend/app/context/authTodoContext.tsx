@@ -5,7 +5,15 @@ import { createContext, ReactNode, useState, useEffect } from "react"
 import { ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
-export const AuthTodoContext =  createContext<ContextValues>({})
+export const AuthTodoContext =  createContext<ContextValues>({
+    user: {username: "", id: ""},
+    openMenu: false,
+    tasks: [],
+    setOpenMenu: () => false,
+    setUser: ({username: "", id: ""}),
+    setTasks: ([]),
+    toggleMenu: () => false
+})
 
 type AuthTodoContextProps = {
     children: ReactNode

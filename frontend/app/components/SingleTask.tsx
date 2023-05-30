@@ -1,10 +1,10 @@
 import React from 'react'
 import Link from 'next/link'
 import { ImCheckboxUnchecked, ImCheckboxChecked} from 'react-icons/im'
-import { TodoType } from '@/types'
+import { Task } from '@/types'
 
 type TaskProps = {
-    task: TodoType
+    task: Task
 }
 
 const Task = ({task}: TaskProps) => {
