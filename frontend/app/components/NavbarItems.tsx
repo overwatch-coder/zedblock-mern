@@ -8,21 +8,29 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 
 const NavbarItems = () => {
-    const {user, setUser} = useContext(AuthTodoContext);
+    const {user, setUser, setTasks} = useContext(AuthTodoContext);
     const router = useRouter();
 
     const logoutUser = () => {
 
       localStorage.removeItem('user');
+
+      
       setUser({
         id: "",
-        username: ""
+        username: "",
+        token: ""
       });
-
-      router.push('/login');
-
+      
+      setTimeout(() => {
+        router.push('/login');
+      }, 0);
+      
       toast.success('you have been successfully logged out');
+
+      setTasks([]);
     }
+    
 
   return (
     <nav className={`flex flex-col space-y-6 md:space-y-0 md:flex-row md:items-center md:space-x-6 mt-6 md:mt-0 mb-4 md:mb-0`}> 

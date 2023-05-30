@@ -6,7 +6,7 @@ import { ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 export const AuthTodoContext =  createContext<ContextValues>({
-    user: {username: "", id: ""},
+    user: {username: "", id: "", token: ""},
     openMenu: false,
     tasks: [],
     setOpenMenu: () => false,
@@ -22,7 +22,8 @@ type AuthTodoContextProps = {
 const AuthTodoProvider = ({children}: AuthTodoContextProps) => {
     const [user, setUser] = useState<User>({
         username: "",
-        id: ""
+        id: "",
+        token: ""
     });
     const [openMenu, setOpenMenu] = useState(false);
     const [tasks, setTasks] = useState<Task[]>()

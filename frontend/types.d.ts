@@ -1,14 +1,22 @@
 
 export type User = {
     username: string,
-    id: string
+    id: string,
+    token: string
 }
 
 export type Task = {
     title: string,
     description: string,
-    id: string,
+    _id?: string,
     completed: boolean
+}
+
+export type CreateTask = {
+    title: string,
+    description: string,
+    completed: boolean,
+    user: User
 }
 
 export type ContextValues = {

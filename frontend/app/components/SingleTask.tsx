@@ -4,18 +4,20 @@ import { ImCheckboxUnchecked, ImCheckboxChecked} from 'react-icons/im'
 import { Task } from '@/types'
 
 type TaskProps = {
-    task: Task
+    task: Task,
+    deleted?: boolean
 }
 
-const Task = ({task}: TaskProps) => {
+const Task = ({task, deleted}: TaskProps) => {
   return (
     <div className='flex items-center justify-between space-x-4 bg-slate-300 py-2 px-4 rounded-sm'>
-        <Link 
-            href={`/tasks/${task.id}`}
+        {!deleted && <Link 
+            href={`/tasks/${task._id}`}
             className={`font-medium hover:text-cyan-600 ${task.completed ? "line-through": ""}`}
         >
             {task.title}
-        </Link>
+        </Link>}
+        {!deleted && 
         <button>
             {task.completed ? 
             <ImCheckboxChecked 
@@ -26,7 +28,11 @@ const Task = ({task}: TaskProps) => {
                 size={20} 
                 color='black'
             />}
-        </button>
+        </button>}
+
+        {deleted && <h2 className='font-medium'>{task.title}</h2>}
+
+        {deleted && <button className='bg-red-700 rounded px-4 py-2 text-white hover:bg-red-800'>Restore</button>}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link';
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import Filter from './components/Filter';
 import SingleTask from './components/SingleTask';
 import { getTask } from './utils';
@@ -12,19 +12,19 @@ import { AuthTodoContext } from './context/authTodoContext';
 const Home = () => {
   const {tasks, setTasks, user} = useContext(AuthTodoContext);
   const router = useRouter();
+  const [deletedTasks, setDeletedTasks]= useState([]);
 
   useEffect(() => {
     if(!user?.username) return router.push('/login');
 
     const fetchAllTasks = async () => {
-      const results = await getTask(`${process.env.NEXT_PUBLIC_API_URI}/todos`);
-      
-      setTasks(results);
+      const results = await getTask(`${process.env.NEXT_PUBLIC_API_URI}/todos`, user?.token);
+      setTasks(results.todos.todos);
+      setDeletedTasks(results.deletedTodos);
     }
 
     fetchAllTasks();
-  }, [setTasks, router, user?.username]);
-
+  }, [setTasks, router, user?.username, user?.token]);
 
   return (
     <section className='flex flex-col space-y-5 py-10 w-full md:max-w-4xl mx-auto bg-slate-200 shadow-md p-10'>
@@ -40,11 +40,29 @@ const Home = () => {
 
             {tasks?.map((task: Task) => (
               <SingleTask 
-                key={task.id} 
+                key={task._id} 
                 task={task}
               />
             ))}
           </section>
+
+          {deletedTasks.length > 0 && 
+            <section>
+              <h2 className='font-semibold font-[georgia] text-2xl py-4 mt-10 text-red-600'>
+                All deleted tasks
+              </h2>
+
+              <div className='flex flex-col space-y-4'>
+                {deletedTasks?.map((task: Task) => (
+                    <SingleTask 
+                      key={task._id} 
+                      task={task}
+                      deleted={true}
+                    />
+                  ))}
+                </div>
+            </section>
+          }
         </>
       ) : (
         <div className='text-center flex flex-col space-y-7 items-center py-10 mx-auto'>

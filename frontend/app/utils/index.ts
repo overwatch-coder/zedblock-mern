@@ -1,19 +1,21 @@
-import { Task } from "@/types";
+import { CreateTask } from "@/types";
 import { toast } from "react-toastify";
 
-export const getTask = async (url: string) => {
+export const getTask = async (url: string, token: string) => {
     const res = await fetch(url, {
         method: 'GET',
-        credentials: 'include'
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
     });
     
     if(!res.ok) {
         const error = await res.json();
-        toast.error(error.message);
+        toast.success(error.message);
         throw new Error('Something went wrong!')
     };
 
-    const tasks: Task[] = await res.json();
+    const tasks = await res.json();
     
     return tasks;
 }
@@ -29,9 +31,28 @@ export const registerOrLoginUser = async (username: string, password: string, en
 
     const result = await res.json();
 
-    console.log(result);
-
     if(!res.ok) return result;
 
     return result;
+}
+
+export const createTask = async (task: CreateTask, method: string = 'POST', id: string = "") => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/todos/${id}`, {
+        method: method,
+        headers: {
+            'authorization': `Bearer ${task.user.token}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(task)
+    });
+    
+    if(!res.ok){
+        const error = await res.json()
+        toast.error(error.message); 
+        throw new Error(error.message);
+    }
+
+    const newTask = await res.json();
+
+    return newTask.todo;
 }
