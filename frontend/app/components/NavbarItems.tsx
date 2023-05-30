@@ -12,28 +12,34 @@ const NavbarItems = () => {
     const router = useRouter();
 
     const logoutUser = async () => {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/logout`, {
-        method: "POST",
-        credentials: "include",
-        
-      });
-
-      console.log(res.headers);
-
-      const result = await res.json();
-      toast.success(result.message);
-      if(!res.ok) throw new Error('Unexpected error while logging out');
-
-      localStorage.removeItem('user');
-
       setUser({
         id: "",
         username: ""
       });
-
-      toast.success(result.message);
-
+      toast.success('you have been successfully logged out');
+      
       router.push('/login');
+
+      // const res = await fetch(`${process.env.NEXT_PUBLIC_API_URI}/logout`, {
+      //   method: "POST",
+      //   credentials: "include",
+      // });
+
+      // const result = await res.json();
+      // toast.success(result.message);
+
+      // if(!res.ok) throw new Error('Unexpected error while logging out');
+
+      // localStorage.removeItem('user');
+
+      // setUser({
+      //   id: "",
+      //   username: ""
+      // });
+
+      // toast.success(result.message);
+
+      // router.push('/login');
     }
 
   return (
