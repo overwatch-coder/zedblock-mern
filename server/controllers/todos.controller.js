@@ -210,7 +210,7 @@ const restoreTodo = expressAsyncHandler(async (req, res) => {
     if(!updatedUserInfo) return res.status(500).json({message: 'user does not exist', user, id});
 
     //send success response to client
-    res.status(200).json({message: "todo restored successfully", todo: restoredTodo});
+    res.status(200).json({message: "todo restored successfully", todo: newTodoFromDeleted});
 });
 
 export {
