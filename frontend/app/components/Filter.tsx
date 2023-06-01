@@ -107,26 +107,26 @@ const Filter = ({filter, setFilter}: FilterProps) => {
 
   return (
     <section className='flex flex-col space-y-5 border-b-2 border-gray-400 pb-7'>
-        <section className='flex flex-col space-y-5 md:flex-row md:space-y-0 md:items-center justify-between'>
+        <section className='flex flex-col justify-between space-y-5 md:flex-row md:space-y-0 md:items-center'>
             {/* Search Bar */}
             <div className='flex flex-row items-center space-x-3'>
                 <input 
                     type="search" 
                     value={search}
-                    className='w-full rounded px-4 py-2 border border-gray-400 focus:border-2 focus:outline-none' placeholder='search...'
+                    className='w-full px-4 py-2 border border-gray-400 rounded focus:border-2 focus:outline-none' placeholder='search...'
                     onChange={handleSearchTask} 
                 />
             </div>
 
             {/* Filter & Sort */}
-            <div className='flex flex-row items-center space-x-5 justify-between sm:justify-end md:justify-center'>
+            <div className='flex flex-row items-center justify-between space-x-5 sm:justify-end md:justify-center'>
                 <div className='flex flex-row items-center space-x-3'>
                     <label htmlFor="filter">Filter:</label>
 
                     <select 
                         name="filter" 
                         id="filter"
-                        className='w-full p-2 rounded border border-gray-400 focus:outline-none'
+                        className='w-full p-2 border border-gray-400 rounded focus:outline-none'
                         value={filter}
                         onChange={filterTasks}
                     >
@@ -142,13 +142,13 @@ const Filter = ({filter, setFilter}: FilterProps) => {
                     <select 
                         name="sort" 
                         id="sort"
-                        className='w-full p-2 rounded border border-gray-400 focus:outline-none'
+                        className='w-full p-2 border border-gray-400 rounded focus:outline-none'
                         value={sort}
                         onChange={sortAllTasks}
                     >
-                        <option value="createdAt:desc">Added date: Asc</option>
+                        <option value="createdAt:desc">Lastest</option>
                         <option
-                        value="createdAt:asc">Added date: Desc</option>
+                        value="createdAt:asc">Added First</option>
                         <option value="title:asc">Title: Asc</option>
                         <option value="title:desc">Title : Desc</option>
                     </select>
@@ -158,17 +158,17 @@ const Filter = ({filter, setFilter}: FilterProps) => {
         
 
         {/* add new task & delete completed task button */}
-        <div className='flex items-center space-x-4 pt-5 justify-between sm:justify-end'>
+        <div className='flex items-center justify-between pt-5 space-x-4 sm:justify-end'>
             <Link 
                 href={'/tasks/create'}
-                className='bg-green-600 hover:bg-green-700 text-white rounded px-4 py-2'
+                className='px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700'
             >
                 Add New Task
             </Link>
 
             <button 
                 onClick={bulkDeleteTasks}
-                className='bg-red-600 hover:bg-red-700 text-white rounded px-4 py-2'
+                className='px-4 py-2 text-white bg-red-600 rounded hover:bg-red-700'
             >
                 Remove Completed
             </button>
