@@ -10,10 +10,10 @@ const Navbar = () => {
     const {openMenu, toggleMenu} = useContext(AuthTodoContext);
     
   return (
-    <header className='bg-slate-800 py-4 px-5 sticky top-0 shadow-md backdrop-blur-md text-white'>
-        <section className='flex justify-between items-center'>
+    <header className='sticky top-0 z-50 px-5 py-4 text-white shadow-md bg-slate-800 backdrop-blur-md'>
+        <section className='flex items-center justify-between'>
             {/* Logo goes here */}
-            <Link href={'/'} className='font-semibold text-xl text-cyan-600'>
+            <Link href={'/'} className='text-xl font-semibold text-cyan-600'>
                 ZedTodo
             </Link>
 
