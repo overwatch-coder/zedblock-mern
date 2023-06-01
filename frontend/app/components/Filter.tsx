@@ -149,8 +149,8 @@ const Filter = ({filter, setFilter}: FilterProps) => {
                         <option value="createdAt:desc">Latest</option>
                         <option
                         value="createdAt:asc">Added First</option>
-                        <option value="title:asc">Title: Asc</option>
-                        <option value="title:desc">Title : Desc</option>
+                        <option value="title:asc">Title: A-Z</option>
+                        <option value="title:desc">Title : Z-A</option>
                     </select>
                 </div>
             </div>
