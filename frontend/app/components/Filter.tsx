@@ -146,7 +146,7 @@ const Filter = ({filter, setFilter}: FilterProps) => {
                         value={sort}
                         onChange={sortAllTasks}
                     >
-                        <option value="createdAt:desc">Lastest</option>
+                        <option value="createdAt:desc">Latest</option>
                         <option
                         value="createdAt:asc">Added First</option>
                         <option value="title:asc">Title: Asc</option>
