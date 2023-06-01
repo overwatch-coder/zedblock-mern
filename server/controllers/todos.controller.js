@@ -150,7 +150,9 @@ const deleteTodo = expressAsyncHandler(async (req, res) => {
         title: deletedTodo.title,
         description: deletedTodo.description,
         completed: deletedTodo.completed,
-        user: deletedTodo.user
+        user: deletedTodo.user,
+        createdAt: deletedTodo.createdAt,
+        updatedAt: deletedTodo.updatedAt
     });
     if(!createDeletedTodo) return res.status(500).json({message: 'Unable to add deleted todo to deleted todo model'});
 
