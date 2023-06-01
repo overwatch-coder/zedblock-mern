@@ -187,7 +187,9 @@ const restoreTodo = expressAsyncHandler(async (req, res) => {
         title: restoredTodo.title,
         description: restoredTodo.description,
         completed: restoredTodo.completed,
-        user: restoredTodo.user
+        user: restoredTodo.user,
+        createdAt: restoredTodo.createdAt,
+        updatedAt: restoredTodo.updatedAt
     });
 
     if(!newTodoFromDeleted) return res.status(500).json({message: 'Unable to add a new todo from deleted model'});
